@@ -1,0 +1,57 @@
+*{
+  margin: 0;
+  padding: 0;
+  /* box-sizing: border-box; */
+}
+.App{
+  display: grid;
+  place-items: center;
+  background-image: linear-gradient(to left bottom, #49bb52, #45c24e, #40ca49, #3cd144, #36d93d);
+  height: 100vh;
+}
+.App .card{
+  background-color: #fafafa;
+  border-radius: 20px;
+}
+.App .card header{
+ color: #36d93d;
+ display: flex;
+ justify-content: center;
+ margin: 10px;
+ padding: 15px 150px;
+}
+.App .card .input-field{
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-row-gap: 15px;
+  margin: 20px 20px 20px 0px;
+  padding: 20px 20px 20px 0px;
+}
+.App .card .input-field .country,.period {
+  display: flex;
+  align-items: center;
+  margin: 10px 20px 5px 5px;
+  padding: 10px 20px 5px 5px;
+  font-size: 20px;
+}
+.App .card .input-field .country input,.period input {
+  padding: 12px;
+  margin-left: 12px;  
+}
+.App .card .result {
+display: grid;
+justify-content: center;
+grid-row-gap: 5px;
+grid-column-gap: 5px;
+margin: 0 80px 0 40px;
+}
+.App .card .result .ncasses,.tcasses,.ncasseu,.tcasseu {
+display: flex;
+grid-row-gap: 5px;
+grid-column-gap: 20px;
+margin: 0 60px;
+}
+.App .card .result .ncasses .no_ofcases,.tcasses .to_ofcases,.ncasseu .n_ofcaseu,.tcasseu .t_ofcaseu {
+  font-size: 20px;
+  letter-spacing: 0.01em ;
+}
