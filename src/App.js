@@ -9,7 +9,6 @@ import './App.css';
 function App() {
 
   const [country, setcountry] = useState([]);
-  // const [coun,setcoun] = useState( );
 
 
   useEffect(() => {
@@ -23,15 +22,16 @@ function App() {
     return item.Country
   }))];
 
-// let fill = (d)=>{
-//   let sin = d.target.data;
-//   let pro = country.target.Country;
+  const handler = () =>{
+    const value= "";
+    return value;
+  }
+  const [value,setValue] = useState( handler);
 
-//   if(sin === pro) {
-//     return country.New_cases;
-//   }
-// }
-// console.log(fill);
+  const handlerchanger=(e)=>{
+   setValue(e.target.value); 
+   console.log(e.target.value);
+  };
 
   return (
     <div className="App">
@@ -44,9 +44,9 @@ function App() {
         <div className="input-field">
           <div className='select'>
           <h2>Country</h2>
-         <select className='country' >
+         <select id="country_select" className='country' onChange={handlerchanger} value={value}>
           {unique.map((data)=>(
-            <option>{data}</option>
+            <option value={data}>{data}</option>
           ))}
          </select>
          </div>
