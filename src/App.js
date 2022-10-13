@@ -9,6 +9,8 @@ import './App.css';
 function App() {
 
   const [country, setcountry] = useState([]);
+  const [datafilter, setDatafilter] = useState([]);
+  const [searchid, setSearchid] = useState(" ")
 
 
   useEffect(() => {
@@ -18,20 +20,28 @@ function App() {
     });
   }, []);
 
-  let unique =[ ...new Set(country.map((item) => {
+  let unique = [...new Set(country.map((item) => {
     return item.Country
   }))];
 
-  const handler = () =>{
-    const value= "";
-    return value;
-  }
-  const [value,setValue] = useState( handler);
+  const handle = (event) => {
+    const search = event.target.value;
 
-  const handlerchanger=(e)=>{
-   setValue(e.target.value); 
-   console.log(e.target.value);
-  };
+    setSearchid(search);
+    if (search !== ' ') {
+      const filtercountry = country.filter((item) => {
+        return item.include(search)
+      })
+
+      setDatafilter(filtercountry);
+    }
+
+    else {
+      setDatafilter(country);
+    }
+  }
+
+
 
   return (
     <div className="App">
@@ -43,51 +53,96 @@ function App() {
         </header>
         <div className="input-field">
           <div className='select'>
-          <h2>Country</h2>
-         <select id="country_select" className='country' onChange={handlerchanger} value={value}>
-          {unique.map((data)=>(
-            <option value={data}>{data}</option>
-          ))}
-         </select>
-         </div>
+            <h2>Country</h2>
+            <select id="country_select" className='country' onChange={(e) => { handle(e) }}>
+              {unique.map((data) => (
+                <option key={data.id} value={data.id}>{data}</option>
+              ))}
+            </select>
+          </div>
           <label className='period'>Period:
-            <input type="date" name="Period" id='period' />
+            <input type="date" name="Period" id='period'
+              min="2020-01-03" max="2022-09-16" onChange={(e) => { handle(e) }} />
           </label>
         </div>
-        <div className="result">
-          <div className='ncasses'>
-            <span className='no_ofcases'>
-              New Case:
-            </span>
-            <div className='reno_cases'>
-              {/* {coun.New_cases} */}
-            </div>
-          </div>
-          <div className='tcasses'>
-            <span className='to_ofcases'>
-              Total Cases:
-            </span>
-            <div className='reto_cases'>
 
-            </div>
-          </div>
-          <div className='ncasseu'>
-            <span className='n_ofcaseu'>
-              New Casualties:
-            </span>
-            <div className='ren_caseu'>
+        {
+          searchid.length > 1 ? (
+            datafilter.map((fullcountry, fullperiod) => (
+              <div className="result" key={fullperiod}>
+                <div className='ncasses'>
+                  <span className='no_ofcases'>
+                    New Case:
+                  </span>
+                  <div className='reno_cases'>
+                    {fullcountry.New_cases}
+                  </div>
+                </div>
+                <div className='tcasses'>
+                  <span className='to_ofcases'>
+                    Total Cases:
+                  </span>
+                  <div className='reto_cases'>
 
-            </div>
-          </div>
-          <div className='tcasseu'>
-            <span className='t_ofcaseu'>
-              Total Casualties:
-            </span>
-            <div className='ret_caseu'>
+                  </div>
+                </div>
+                <div className='ncasseu'>
+                  <span className='n_ofcaseu'>
+                    New Casualties:
+                  </span>
+                  <div className='ren_caseu'>
+                    {fullcountry.Cumulative_cases}
+                  </div>
+                </div>
+                <div className='tcasseu'>
+                  <span className='t_ofcaseu'>
+                    Total Casualties:
+                  </span>
+                  <div className='ret_caseu'>
 
-            </div>
-          </div>
-        </div>
+                  </div>
+                </div>
+              </div>
+            ))
+            ): (
+              country.map((count,full)=>(
+                <div className="result" key={full}>
+                <div className='ncasses'>
+                  <span className='no_ofcases'>
+                    New Case:
+                  </span>
+                  <div className='reno_cases'>
+                    {count.New_cases}
+                  </div>
+                </div>
+                <div className='tcasses'>
+                  <span className='to_ofcases'>
+                    Total Cases:
+                  </span>
+                  <div className='reto_cases'>
+
+                  </div>
+                </div>
+                <div className='ncasseu'>
+                  <span className='n_ofcaseu'>
+                    New Casualties:
+                  </span>
+                  <div className='ren_caseu'>
+                    {count.Cumulative_cases}
+                  </div>
+                </div>
+                <div className='tcasseu'>
+                  <span className='t_ofcaseu'>
+                    Total Casualties:
+                  </span>
+                  <div className='ret_caseu'>
+
+                  </div>
+                </div>
+              </div>
+              ))
+            )
+        }
       </div>
     </div>
   );
